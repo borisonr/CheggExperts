@@ -101,6 +101,22 @@ async function createExpertsStore(auth) {
 }
 
 export async function updateExpertsInDrive(experts){
+	DRIVE.files.update(
+		{
+			fileId,
+			media: {
+				body: experts,
+			  },
+		},
+		(err, file) => {
+			if (err) {
+				// Handle error
+				console.error(err);
+			  } else {
+				  console.log('updated experts successfully')
+			  }
+		}
+	)
 
 }
 
