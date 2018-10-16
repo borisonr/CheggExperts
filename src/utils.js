@@ -13,3 +13,10 @@ export const normalizePort = (val) => {
   if (port >= 0) return port;
   return false;
 };
+
+export const formatSubject = subject => {
+  return subject
+    .replace(/\W/g, '')
+    .toLowerCase()
+
+}
