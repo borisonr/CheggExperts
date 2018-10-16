@@ -1,12 +1,12 @@
 import express from 'express';
 
 import { log } from './utils';
-import { reportsList, generateReport } from './modules/reports';
 
 const router = new express.Router();
 
 router.post('/slack/command/findexpert', async (req, res) => {
   try {
+    console.log('here', req)
     const slackReqObj = req.body;
 
     const response = {
@@ -23,7 +23,7 @@ router.post('/slack/command/findexpert', async (req, res) => {
           name: 'reports_select_menu',
           text: 'Choose a report...',
           type: 'select',
-          options: reportsList,
+          // options: reportsList,
         }],
       }],
     };

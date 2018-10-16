@@ -1,11 +1,11 @@
 {
   "name": "chegg-experts",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A slack bot that helps find experts at Chegg",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "babel-node src/index.js"
   },
   "author": "",
   "license": "ISC",
