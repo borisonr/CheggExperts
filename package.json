@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/index.js"
+    "start": "babel-node src/index.js",
+    "lint": "eslint src"
   },
   "author": "",
   "license": "ISC",
@@ -13,9 +14,7 @@
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",
     "config": "^1.28.1",
-    "csv-write-stream": "^2.0.0",
     "express": "^4.16.2",
-    "mkdirp": "^0.5.1",
     "morgan": "^1.9.0",
     "request": "^2.83.0",
     "tracer": "^0.8.11"
