@@ -1,5 +1,5 @@
 import express from 'express';
-import { experts } from './experts';
+import { getExpertsFromDrive, updateExpertsInDrive } from './drive';
 
 import { log, formatSubject } from './utils';
 
@@ -8,6 +8,7 @@ const router = new express.Router();
 router.post('/slack/command/findexpert', async (req, res) => {
   try {
     const slackReqObj = req.body;
+    const experts = await getExpertsFromDrive()
     const subjectExperts = experts[formatSubject(slackReqObj.text)];
     let expert;
     if(subjectExperts) {
@@ -32,8 +33,10 @@ router.post('/slack/command/addexpert', async (req, res) => {
   try {
     const slackReqObj = req.body;
     const subject = formatSubject(slackReqObj.text)
+    const experts = await getExpertsFromDrive()
     if(experts[subject]) subjectExperts.push(slackReqObj.user_name)
     else experts[subject] = [slackReqObj.user_name]
+    updateExpertsInDrive(experts)
 
     const response = {
       response_type: 'in_channel',

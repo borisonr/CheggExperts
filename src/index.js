@@ -6,6 +6,7 @@ import http from 'http';
 
 import bootstrap from './bootstrap';
 import { log, normalizePort } from './utils';
+import { initExpertsStore } from './drive';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.start = async () => {
   const port = normalizePort(config.get('port'));
   app.set('port', port);
   bootstrap(app);
+  initExpertsStore();
   const server = http.createServer(app);
 
   server.on('error', (error) => {
