@@ -12,6 +12,10 @@ var _drive = require('./drive');
 
 var _utils = require('./utils');
 
+var _experts = require('./experts.json');
+
+var _experts2 = _interopRequireDefault(_experts);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const router = new _express2.default.Router();
@@ -19,8 +23,9 @@ const router = new _express2.default.Router();
 router.post('/slack/command/findexpert', async (req, res) => {
   try {
     const slackReqObj = req.body;
-    const experts = await (0, _drive.getExpertsFromDrive)();
-    const subjectExperts = experts[(0, _utils.formatSubject)(slackReqObj.text)];
+    // TODO figure out Drive OAuth
+    // const experts = await getExpertsFromDrive()
+    const subjectExperts = _experts2.default[(0, _utils.formatSubject)(slackReqObj.text)];
     let expert;
     if (subjectExperts) {
       const randomIndex = Math.floor(Math.random() * subjectExperts.length);
@@ -44,9 +49,10 @@ router.post('/slack/command/addexpert', async (req, res) => {
   try {
     const slackReqObj = req.body;
     const subject = (0, _utils.formatSubject)(slackReqObj.text);
-    const experts = await (0, _drive.getExpertsFromDrive)();
-    if (experts[subject]) subjectExperts.push(slackReqObj.user_name);else experts[subject] = [slackReqObj.user_name];
-    (0, _drive.updateExpertsInDrive)(experts);
+    // TODO figure out Drive OAuth
+    // const experts = await getExpertsFromDrive()
+    if (_experts2.default[subject]) subjectExperts.push(slackReqObj.user_name);else _experts2.default[subject] = [slackReqObj.user_name];
+    (0, _drive.updateExpertsInDrive)(_experts2.default);
 
     const response = {
       response_type: 'in_channel',
