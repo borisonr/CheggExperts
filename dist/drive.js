@@ -33,8 +33,9 @@ function initExpertsStore() {
 function authorize(callback) {
 	const client_secret = process.env.client_secret;
 	const client_id = process.env.client_id;
-	const redirect_uris = process.env.redirect_uris;
-	const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+	const redirect_uri = process.env.redirect_uri;
+	console.log(redirect_uris);
+	const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uri);
 	oAuth2Client.setCredentials({
 		access_token: process.env.access_token,
 		refresh_token: process.env.refresh_token,
