@@ -38,7 +38,7 @@ app.start = async () => {
   app.set('port', port);
   (0, _bootstrap2.default)(app);
   // TODO figure out Drive OAuth
-  // await initExpertsStore();
+  await (0, _drive.initExpertsStore)();
   const server = _http2.default.createServer(app);
 
   server.on('error', error => {

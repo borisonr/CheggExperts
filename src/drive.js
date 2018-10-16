@@ -32,48 +32,13 @@ async function authorize(callback) {
   const redirect_uri = process.env.redirect_uri
   const oAuth2Client = new google.auth.OAuth2(
 	  client_id, client_secret, redirect_uri);
-//   oAuth2Client.setCredentials({
-// 	  access_token: process.env.access_token, 
-// 	  refresh_token: process.env.refresh_token,
-// 	  scope: "https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.file",
-// 	  token_type: "Bearer",
-// 	  expiry_date: process.env.expiry_date
-//   });
-google.options({auth: oAuth2Client});
-
-/**
- * Open an http server to accept the oauth callback. In this simple example, the only request to our webserver is to /callback?code=<code>
- */
-await authenticate(SCOPES)
-async function authenticate(scopes) {
-  return new Promise((resolve, reject) => {
-    // grab the url that will be used for authorization
-    const authorizeUrl = oAuth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: scopes.join(' '),
-    });
-    const server = http
-      .createServer(async (req, res) => {
-        try {
-          if (req.url.indexOf('/oauth2callback') > -1) {
-            const qs = querystring.parse(url.parse(req.url).query);
-            res.end('Authentication successful! Please return to the console.');
-            server.destroy();
-            const {tokens} = await oAuth2Client.getToken(qs.code);
-            oAuth2Client.credentials = tokens;
-            resolve(oAuth2Client);
-          }
-        } catch (e) {
-          reject(e);
-        }
-      })
-      .listen(3000, () => {
-        // open the browser to the authorize url to start the workflow
-        opn(authorizeUrl, {wait: false}).then(cp => cp.unref());
-      });
-    destroyer(server);
+  oAuth2Client.setCredentials({
+	  access_token: process.env.access_token, 
+	  refresh_token: process.env.refresh_token,
+	  scope: "https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.file",
+	  token_type: "Bearer",
+	  expiry_date: process.env.expiry_date
   });
-}
   callback(oAuth2Client);
 }
 
