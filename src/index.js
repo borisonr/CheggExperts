@@ -13,8 +13,8 @@ const app = express();
 
 app.start = async () => {
   log.info('Starting Server...');
-  const port = normalizePort(config.get('port'));
-  app.set('port', process.env.PORT || port);
+  const port = process.env.PORT || normalizePort(config.get('port'));
+  app.set('port', port);
   bootstrap(app);
   // TODO figure out Drive OAuth
   // await initExpertsStore();

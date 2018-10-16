@@ -34,8 +34,8 @@ const app = (0, _express2.default)();
 
 app.start = async () => {
   _utils.log.info('Starting Server...');
-  const port = (0, _utils.normalizePort)(_config2.default.get('port'));
-  app.set('port', process.env.PORT || port);
+  const port = process.env.PORT || (0, _utils.normalizePort)(_config2.default.get('port'));
+  app.set('port', port);
   (0, _bootstrap2.default)(app);
   // TODO figure out Drive OAuth
   // await initExpertsStore();
