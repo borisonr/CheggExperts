@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node src/index.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "prod": "NODE_ENV=production node dist/index.js",
+    "build": "rm -rf ./dist/ && babel src --out-dir dist/ --copy-files"
   },
   "author": "",
   "license": "ISC",
