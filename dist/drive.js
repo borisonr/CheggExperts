@@ -35,6 +35,7 @@ function authorize(callback) {
 	const client_secret = process.env.client_secret;
 	const client_id = process.env.client_id;
 	const redirect_uri = process.env.redirect_uri;
+	console.log(client_id, 'client id');
 	const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uri);
 	oAuth2Client.setCredentials({
 		access_token: process.env.access_token,
