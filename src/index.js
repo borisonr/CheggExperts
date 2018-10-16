@@ -7,6 +7,7 @@ import http from 'http';
 import bootstrap from './bootstrap';
 import { log, normalizePort } from './utils';
 import { initExpertsStore } from './drive';
+require('dotenv').config()
 
 const app = express();
 
