@@ -13,7 +13,7 @@ const app = express();
 app.start = async () => {
   log.info('Starting Server...');
   const port = normalizePort(config.get('port'));
-  app.set('port', port);
+  app.set('port', $PORT || port);
   bootstrap(app);
   initExpertsStore();
   const server = http.createServer(app);
