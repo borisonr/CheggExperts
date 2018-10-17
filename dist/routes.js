@@ -21,7 +21,6 @@ const router = new _express2.default.Router();
 router.post('/slack/command/findexpert', async (req, res) => {
   try {
     const slackReqObj = req.body;
-    // TODO figure out Drive OAuth
     const experts = await (0, _drive.getExpertsFromDrive)();
     const subjectExperts = experts[(0, _utils.formatSubject)(slackReqObj.text)];
     let expert;
@@ -47,9 +46,8 @@ router.post('/slack/command/addexpert', async (req, res) => {
   try {
     const slackReqObj = req.body;
     const subject = (0, _utils.formatSubject)(slackReqObj.text);
-    // TODO figure out Drive OAuth
     const experts = await (0, _drive.getExpertsFromDrive)();
-    if (experts[subject]) subjectExperts.push(slackReqObj.user_name);else experts[subject] = [slackReqObj.user_name];
+    if (experts[subject]) experts[subject].push(slackReqObj.user_name);else experts[subject] = [slackReqObj.user_name];
     (0, _drive.updateExpertsInDrive)(experts);
 
     const response = {

@@ -41,7 +41,6 @@ async function initExpertsStore() {
  * @param {function} callback The callback to call with the authorized client.
  */
 async function authorize(callback) {
-	console.log(process.env.client_secret);
 	const client_secret = process.env.client_secret;
 	const client_id = process.env.client_id;
 	const redirect_uri = process.env.redirect_uri;
