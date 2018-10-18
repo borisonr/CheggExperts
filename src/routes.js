@@ -42,7 +42,7 @@ router.post('/slack/command/listsubjects', async (req, res) => {
   try {
     const slackReqObj = req.body;
     const experts = await getExpertsFromDrive()
-    const subjects = Object.keys(experts).join(', ')
+    const subjects = Object.keys(experts).sort().join(', ')
 
     const response = {
       response_type: 'in_channel',
