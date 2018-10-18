@@ -13,10 +13,8 @@ const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly', 'http
 const TOKEN_PATH = 'token.json';
 let DRIVE;
 
-let fileId;
-
 export async function initExpertsStore() {
-	await authorize(createExpertsStore);
+	authorize();
 }
 
 /**
@@ -25,7 +23,7 @@ export async function initExpertsStore() {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-async function authorize(callback) {
+function authorize() {
   const client_secret = process.env.client_secret
   const client_id = process.env.client_id
   const redirect_uri = process.env.redirect_uri
@@ -38,42 +36,13 @@ async function authorize(callback) {
 	  token_type: "Bearer",
 	  expiry_date: process.env.expiry_date
   });
-  callback(oAuth2Client);
-}
-
-/**
- * Store the experts table in Drive
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-async function createExpertsStore(auth) {
-  const fileName = 'src/experts.json'
-  DRIVE = google.drive({version: 'v3', auth});
-  const fileSize = fs.statSync(fileName).size;
-  const fileMetadata = {
-	'name': `CheggExperts${Date.now()}.docx`
-  };
-
-  const res = await DRIVE.files.create(
-    { media: {
-        body: fs.createReadStream(fileName),
-	  },
-	  resource: fileMetadata
-    },
-	function (err, file) {
-		if (err) {
-		  // Handle error
-		  console.error(err);
-		} else {
-			fileId = file.data.id
-		}
-	  }
-  );
+  DRIVE = google.drive({version: 'v3', auth: oAuth2Client});
 }
 
 export async function updateExpertsInDrive(experts){
 	DRIVE.files.update(
 		{
-			fileId,
+			fileId: process.env.file_id,
 			media: {
 				body: experts,
 			  },
@@ -93,11 +62,10 @@ export async function updateExpertsInDrive(experts){
 export async function getExpertsFromDrive() {
 	return new Promise(async (resolve, reject) => {
 	  const filePath = path.join(os.tmpdir(), uuid.v4());
-	  console.log(`writing to ${filePath}`);
 	  const dest = fs.createWriteStream(filePath);
 	  let progress = 0;
 	  const res = await DRIVE.files.get(
-		{fileId, alt: 'media'},
+		{fileId: process.env.file_id, alt: 'media'},
 		function (err, file) {
 			if (err) {
 			  // Handle error

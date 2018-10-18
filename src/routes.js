@@ -8,14 +8,14 @@ const router = new express.Router();
 
 const errorResponse = channel => ({
   response_type: 'in_channel',
-  channel: channel
-  text: `Sorry, that is not a valid subject, please try typing a string of alphanumeric characters!`,
+  channel: channel,
+  text: `Sorry, that is not a valid subject, please try typing a string of alphanumeric characters!`
 });
 
 router.post('/slack/command/findexpert', async (req, res) => {
   try {
     const slackReqObj = req.body;
-    
+
     if(typeof slackReqObj.text !== 'string') return res.json(errorResponse(channel));
 
     const experts = await getExpertsFromDrive()
