@@ -2,7 +2,6 @@ import express from 'express';
 import { getExpertsFromDrive, updateExpertsInDrive } from './drive';
 
 import { log, formatSubject } from './utils';
-// import experts from './experts.json'
 
 const router = new express.Router();
 
